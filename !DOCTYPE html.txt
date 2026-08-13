@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كرسي وميز — طقم 4 كراسي + ميز قابل للطي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pine:#1E4D3B;      /* أخضر غامق - الطبيعة */
+  --pine-deep:#123528;
+  --grass:#3E8E5E;
+  --sand:#F5EFE2;      /* رملي فاتح - خلفية */
+  --sun:#F2B441;       /* أصفر شمس - أكسنت */
+  --ink:#17231D;
+  --white:#FFFFFF;
+  --line:#D9D0BC;
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans Arabic',sans-serif;
+  background:var(--sand);
+  color:var(--ink);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Alexandria',sans-serif}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(160deg,var(--pine-deep) 0%,var(--pine) 60%,#2A6A4C 100%);
+  color:var(--white);
+  padding:30px 20px 120px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;inset-inline:0;bottom:-1px;height:60px;
+  background:var(--sand);
+  clip-path:ellipse(75% 100% at 50% 100%);
+}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.badge{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;
+  padding:5px 14px;
+  font-size:.8rem;font-weight:500;
+  backdrop-filter:blur(4px);
+}
+.badge.sun{background:var(--sun);color:var(--pine-deep);border-color:var(--sun);font-weight:700}
+.hero h1{
+  font-size:clamp(1.7rem,6vw,2.6rem);
+  font-weight:900;line-height:1.35;
+  margin-bottom:18px;
+}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.price-tag{
+  display:inline-flex;align-items:baseline;gap:10px;
+  background:var(--white);color:var(--pine-deep);
+  border-radius:var(--radius);
+  padding:14px 22px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.price-tag .num{font-family:'Alexandria';font-size:2.1rem;font-weight:900;line-height:1}
+.price-tag .unit{font-weight:700;font-size:.95rem}
+.price-tag .old{font-size:.85rem;text-decoration:line-through;opacity:.45}
+
+/* ---------- FEATURES ---------- */
+.features{
+  max-width:520px;margin:8px auto 0;padding:0 20px 8px;
+}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 14px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.feat .ic{font-size:1.5rem;line-height:1}
+.feat b{font-size:.92rem;font-weight:700}
+.feat span{font-size:.8rem;color:#5A6B60}
+
+/* ---------- FORM ---------- */
+.order{max-width:520px;margin:-70px auto 0;padding:0 20px 28px;position:relative;z-index:2}
+.order h2{
+  font-size:1.4rem;font-weight:800;margin-bottom:4px;
+}
+.order .hint{font-size:.9rem;color:#5A6B60;margin-bottom:18px}
+form{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:22px 18px;
+  box-shadow:0 10px 30px rgba(30,77,59,.08);
+}
+.field{margin-bottom:16px}
+label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
+label .req{color:#C0392B}
+input,select,textarea{
+  width:100%;
+  font-family:inherit;font-size:1rem;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:13px 14px;
+  background:#FCFAF5;
+  transition:border-color .15s, box-shadow .15s;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--grass);
+  box-shadow:0 0 0 3px rgba(62,142,94,.15);
+}
+input.err,select.err,textarea.err{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+.err-msg{display:none;color:#C0392B;font-size:.8rem;margin-top:5px}
+.err-msg.show{display:block}
+textarea{resize:vertical;min-height:74px}
+
+/* quantity stepper */
+.qty-row{display:flex;align-items:center;gap:14px}
+.stepper{
+  display:flex;align-items:center;
+  border:1.5px solid var(--line);
+  border-radius:12px;overflow:hidden;
+  background:#FCFAF5;
+}
+.stepper button{
+  width:52px;height:52px;border:none;background:var(--sand);
+  font-size:1.5rem;font-weight:700;color:var(--pine);
+  cursor:pointer;transition:background .15s;
+  touch-action:manipulation;
+}
+.stepper button:active{background:var(--sun)}
+.stepper .qv{
+  width:64px;text-align:center;
+  font-family:'Alexandria';font-size:1.4rem;font-weight:800;
+  border:none;background:transparent;padding:0;
+}
+.stepper .qv:focus{box-shadow:none}
+
+/* live total — signature */
+.total-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--pine-deep);color:var(--white);
+  border-radius:14px;
+  padding:14px 18px;
+  margin:20px 0 16px;
+}
+.total-bar .lbl{font-size:.85rem;opacity:.75}
+.total-bar .val{
+  font-family:'Alexandria';font-size:1.5rem;font-weight:900;color:var(--sun);
+  transition:transform .18s;
+}
+.total-bar .val.pop{transform:scale(1.12)}
+.total-bar .free{font-size:.75rem;background:var(--grass);border-radius:999px;padding:3px 10px;margin-top:2px}
+
+.cta{
+  width:100%;
+  font-family:'Alexandria';font-size:1.15rem;font-weight:800;
+  background:var(--sun);color:var(--pine-deep);
+  border:none;border-radius:14px;
+  padding:17px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:transform .12s, box-shadow .12s;
+  box-shadow:0 6px 18px rgba(242,180,65,.4);
+  touch-action:manipulation;
+}
+.cta:active{transform:scale(.98)}
+.cta svg{width:24px;height:24px}
+.after-note{text-align:center;font-size:.8rem;color:#5A6B60;margin-top:12px}
+
+/* trust strip */
+.trust{
+  max-width:520px;margin:0 auto;padding:0 20px 60px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.trust-item{
+  display:flex;align-items:center;gap:12px;
+  font-size:.9rem;font-weight:500;
+  background:var(--white);border:1px solid var(--line);
+  border-radius:12px;padding:12px 16px;
+}
+.trust-item .tic{
+  width:34px;height:34px;flex-shrink:0;
+  background:var(--pine);color:var(--sun);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+
+footer{
+  text-align:center;padding:22px;font-size:.8rem;color:#7A8A80;
+  border-top:1px solid var(--line);
+}
+
+.spinner{
+  width:20px;height:20px;border-radius:50%;
+  border:3px solid rgba(18,53,40,.25);border-top-color:var(--pine-deep);
+  animation:spin .7s linear infinite;display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cta[disabled]{opacity:.65;cursor:wait}
+.success{
+  display:none;text-align:center;padding:34px 18px;
+}
+.success.show{display:block}
+.success .big{font-size:3rem;line-height:1;margin-bottom:12px}
+.success h3{font-family:'Alexandria';font-size:1.35rem;font-weight:800;margin-bottom:8px;color:var(--pine)}
+.success p{color:#5A6B60;font-size:.95rem;margin-bottom:20px}
+.success .wa-alt{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#E8F5EE;color:var(--pine);font-weight:700;
+  border:1.5px solid var(--grass);border-radius:12px;
+  padding:12px 20px;text-decoration:none;font-size:.95rem;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+@media(min-width:640px){
+  .hero{padding-top:56px;text-align:center}
+  .badge-row{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="badge-row">
+    <span class="badge sun">عرض محدود</span>
+    <span class="badge">توصيل مجاني</span>
+    <span class="badge">الدفع عند الاستلام</span>
+  </div>
+  <h1>طقم <em>٤ كراسي VIP</em> + ميز ٧٠×٧٠</h1>
+  <div class="price-tag">
+    <span class="num" id="unitPrice">70,000</span>
+    <span class="unit">دينار مع التوصيل</span>
+    <span class="old">95,000</span>
+  </div>
+</header>
+
+<!-- ============ ORDER FORM ============ -->
+<section class="order" id="order">
+  <h2>احجز طلبك الآن</h2>
+  <p class="hint">عبّي المعلومات وطلبك يوصلنا مباشرة على واتساب — نتصل بيك لتأكيد الطلب.</p>
+
+  <form id="orderForm" novalidate>
+    <div class="field">
+      <label for="fname">الاسم الكامل <span class="req">*</span></label>
+      <input type="text" id="fname" autocomplete="name" placeholder="مثال: أحمد محمد">
+      <div class="err-msg" id="err-fname">رجاءً اكتب اسمك</div>
+    </div>
+
+    <div class="field">
+      <label for="phone">رقم الهاتف <span class="req">*</span></label>
+      <input type="tel" id="phone" inputmode="numeric" autocomplete="tel" placeholder="07XXXXXXXXX" maxlength="11">
+      <div class="err-msg" id="err-phone">اكتب رقم صحيح يبدأ بـ 07 (11 رقم)</div>
+    </div>
+
+    <div class="field">
+      <label for="gov">المحافظة <span class="req">*</span></label>
+      <select id="gov">
+        <option value="" selected disabled>اختر المحافظة</option>
+        <option>أربيل</option>
+        <option>السليمانية</option>
+        <option>دهوك</option>
+        <option>بغداد</option>
+        <option>البصرة</option>
+        <option>نينوى (الموصل)</option>
+        <option>كركوك</option>
+        <option>النجف</option>
+        <option>كربلاء</option>
+        <option>الأنبار</option>
+        <option>بابل</option>
+        <option>ديالى</option>
+        <option>ذي قار</option>
+        <option>واسط</option>
+        <option>ميسان</option>
+        <option>المثنى</option>
+        <option>القادسية (الديوانية)</option>
+        <option>صلاح الدين</option>
+        <option>حلبجة</option>
+      </select>
+      <div class="err-msg" id="err-gov">رجاءً اختر المحافظة</div>
+    </div>
+
+    <div class="field">
+      <label for="addr">المنطقة / أقرب نقطة دالة <span class="req">*</span></label>
+      <textarea id="addr" placeholder="مثال: عينكاوة، قرب ..."></textarea>
+      <div class="err-msg" id="err-addr">رجاءً اكتب المنطقة</div>
+    </div>
+
+    <div class="field">
+      <label>عدد الأطقم</label>
+      <div class="qty-row">
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="تقليل العدد">−</button>
+          <input class="qv" id="qty" value="1" inputmode="numeric" readonly aria-live="polite">
+          <button type="button" id="plus" aria-label="زيادة العدد">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <div>
+        <div class="lbl">المجموع الكلي</div>
+        <span class="free">التوصيل مجاني ✓</span>
+      </div>
+      <div class="val" id="total">70,000 د.ع</div>
+    </div>
+
+    <button type="submit" class="cta" id="ctaBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.5 14.4l-2.2-1c-.3-.1-.6-.1-.8.2l-.9 1.1c-.2.2-.5.3-.8.2-1-.4-3.2-1.9-4.4-4.2-.1-.3-.1-.6.1-.8l.9-1c.2-.3.3-.6.1-.9l-1-2.2c-.2-.5-.8-.7-1.3-.5-1 .5-2 1.5-2 2.7 0 .5.1 1 .3 1.6.8 2.6 2.7 5 5.1 6.6 1.3.9 2.9 1.6 4.4 1.8.6.1 1.2 0 1.7-.3 1-.5 1.7-1.4 1.9-2.4.1-.4-.2-.8-.6-.9zM12 2C6.5 2 2 6.3 2 11.7c0 1.9.6 3.7 1.6 5.3L2.5 21c-.1.4.3.8.7.7l4.2-1.1c1.4.7 3 1.1 4.6 1.1 5.5 0 10-4.3 10-9.7S17.5 2 12 2z"/></svg>
+      <span id="ctaText">أرسل الحجز عبر واتساب</span>
+      <span class="spinner" id="ctaSpin" hidden></span>
+    </button>
+    <p class="after-note">طلبك ينحفظ عندنا وينفتح واتساب برسالة جاهزة — بس اضغط إرسال.</p>
+  </form>
+
+  <div class="success" id="successBox">
+    <div class="big">✅</div>
+    <h3>تم استلام طلبك بنجاح!</h3>
+    <p>إذا ما انفتح واتساب تلقائياً، اضغط الزر تحت لتأكيد طلبك.</p>
+    <a class="wa-alt" id="waAlt" href="#" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1c-.3-.1-.6-.1-.8.2l-.9 1.1c-.2.2-.5.3-.8.2-1-.4-3.2-1.9-4.4-4.2-.1-.3-.1-.6.1-.8l.9-1c.2-.3.3-.6.1-.9l-1-2.2c-.2-.5-.8-.7-1.3-.5-1 .5-2 1.5-2 2.7 0 .5.1 1 .3 1.6.8 2.6 2.7 5 5.1 6.6 1.3.9 2.9 1.6 4.4 1.8.6.1 1.2 0 1.7-.3 1-.5 1.7-1.4 1.9-2.4.1-.4-.2-.8-.6-.9zM12 2C6.5 2 2 6.3 2 11.7c0 1.9.6 3.7 1.6 5.3L2.5 21c-.1.4.3.8.7.7l4.2-1.1c1.4.7 3 1.1 4.6 1.1 5.5 0 10-4.3 10-9.7S17.5 2 12 2z"/></svg>
+      افتح واتساب لتأكيد الطلب
+    </a>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features">
+  <div class="feat-grid">
+    <div class="feat"><span class="ic">🪑</span><b>٤ كراسي VIP</b><span>هيكل حديد مقوّى يتحمل الاستخدام اليومي</span></div>
+    <div class="feat"><span class="ic">📐</span><b>ميز ٧٠×٧٠ سم</b><span>سطح واسع يكفي للعائلة</span></div>
+    <div class="feat"><span class="ic">🎒</span><b>قابل للطي</b><span>ينطوي ويتخزن بسهولة بالسيارة</span></div>
+    <div class="feat"><span class="ic">💵</span><b>الدفع عند الاستلام</b><span>افحص الطلب قبل ما تدفع</span></div>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section class="trust">
+  <div class="trust-item"><span class="tic">🚚</span> توصيل لجميع محافظات العراق خلال ٢-٤ أيام</div>
+  <div class="trust-item"><span class="tic">🔁</span> إذا وصل الطلب تالف — نبدله مجاناً</div>
+  <div class="trust-item"><span class="tic">💬</span> فريقنا يرد عليك بنفس اليوم</div>
+</section>
+
+<footer>كرسي وميز — أربيل، العراق</footer>
+
+<script>
+(function(){
+  var UNIT = 70000;
+  var WA_NUMBER = "9647741077999";
+  // ⬇️ بعد ما تنشر Google Apps Script، الصق الرابط هنا بين علامتي الاقتباس
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby53TVU_3EhWsuxaE5wEoU-MAxMa7YG4J3Poyo8kP5pmmDY9-RghZRqU2SURrFlvs_5Gw/exec";
+
+  var qty = 1;
+  var qtyEl = document.getElementById('qty');
+  var totalEl = document.getElementById('total');
+
+  function fmt(n){ return n.toLocaleString('en-US'); }
+
+  function updateTotal(){
+    qtyEl.value = qty;
+    totalEl.textContent = fmt(UNIT * qty) + " د.ع";
+    totalEl.classList.add('pop');
+    setTimeout(function(){ totalEl.classList.remove('pop'); }, 180);
+  }
+
+  document.getElementById('plus').addEventListener('click', function(){
+    if (qty < 20) { qty++; updateTotal(); }
+  });
+  document.getElementById('minus').addEventListener('click', function(){
+    if (qty > 1) { qty--; updateTotal(); }
+  });
+
+  function setErr(id, on){
+    document.getElementById(id).classList.toggle('err', on);
+    document.getElementById('err-' + id).classList.toggle('show', on);
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var name  = document.getElementById('fname').value.trim();
+    var phone = document.getElementById('phone').value.trim().replace(/\s|-/g,'');
+    var gov   = document.getElementById('gov').value;
+    var addr  = document.getElementById('addr').value.trim();
+
+    var okName  = name.length >= 2;
+    var okPhone = /^07\d{9}$/.test(phone);
+    var okGov   = gov !== "";
+    var okAddr  = addr.length >= 3;
+
+    setErr('fname', !okName);
+    setErr('phone', !okPhone);
+    setErr('gov',   !okGov);
+    setErr('addr',  !okAddr);
+
+    if (!(okName && okPhone && okGov && okAddr)) {
+      var firstErr = document.querySelector('input.err, textarea.err, select.err');
+      if (firstErr) firstErr.focus();
+      return;
+    }
+
+    var total = UNIT * qty;
+    var btn = document.getElementById('ctaBtn');
+    btn.disabled = true;
+    document.getElementById('ctaText').textContent = "جاري إرسال الطلب...";
+    document.getElementById('ctaSpin').hidden = false;
+
+    // 1) حفظ الطلب بالجدول (بالخلفية، ما ينتظر الرد)
+    if (SCRIPT_URL && SCRIPT_URL.indexOf('http') === 0) {
+      var data = new FormData();
+      data.append('name', name);
+      data.append('phone', phone);
+      data.append('gov', gov);
+      data.append('addr', addr);
+      data.append('qty', qty);
+      data.append('total', total);
+      try { fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:data, keepalive:true }); } catch(e){}
+    }
+
+    // 2) فتح واتساب برسالة الطلب كاملة
+    var msg =
+      "🪑 طلب جديد — كرسي وميز\n" +
+      "──────────────\n" +
+      "👤 الاسم: " + name + "\n" +
+      "📞 الهاتف: " + phone + "\n" +
+      "🏙️ المحافظة: " + gov + "\n" +
+      "📍 المنطقة: " + addr + "\n" +
+      "🔢 العدد: " + qty + (qty === 1 ? " طقم" : " أطقم") + "\n" +
+      "💰 المجموع: " + total.toLocaleString('en-US') + " دينار (مع التوصيل)\n" +
+      "──────────────\n" +
+      "أرجو تأكيد الطلب 🙏";
+
+    // تأخير بسيط يضمن انطلاق طلب الحفظ قبل مغادرة الصفحة
+    setTimeout(function(){
+      showSuccess(name);
+      window.location.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+    }, 400);
+  });
+
+  function showSuccess(name){
+    document.getElementById('orderForm').style.display = 'none';
+    var box = document.getElementById('successBox');
+    box.classList.add('show');
+    var msg = "مرحباً، سويت حجز من الموقع باسم " + name + " — أريد أتأكد من طلبي 🙏";
+    document.getElementById('waAlt').href =
+      "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+  }
+})();
+</script>
+</body>
+</html>
