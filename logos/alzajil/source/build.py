@@ -1,5 +1,9 @@
 import re, os
-from mark import mark, RED, INK
+from mark import RED, INK
+from mark2 import mark2, VB
+import sys
+BIRD=sys.argv[1] if len(sys.argv)>1 else "213628"
+def mark(theme, uid="a", mono=None, knock=None): return mark2(theme, uid=uid, mono=mono, knock=knock, bird=BIRD)
 F="/tmp/claude-0/-home-user-chairs/24d548da-cbc8-56d1-8600-369a1f297ef8/scratchpad/fonts"
 AL=f"{F}/fontsource-alexandria-5.3.0/files"; CA=f"{F}/fontsource-cairo-5.3.0/files"
 def icon(name):
@@ -28,7 +32,7 @@ def full(theme, mono=None, bg=None, W=1600, H=1750, knock=None):
     bgcss = f"background:{bg};" if bg else ""
     return f"""<html><head><style>{CSS}</style></head><body style="width:{W}px;height:{H}px;{bgcss}">
 <div style="width:{W}px;height:{H}px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 170px">
- <svg viewBox="80 0 900 660" width="1080" style="margin-bottom:-10px">{m}</svg>
+ <svg viewBox="{VB}" width="1180" style="margin-bottom:-6px">{m}</svg>
  <div dir="rtl" style="font-family:Alex;font-weight:900;font-size:200px;line-height:1.3;white-space:nowrap;color:{ink}">شركة <span style="color:{acc}">الزاجل</span></div>
  <div style="display:flex;align-items:center;gap:36px;width:100%;margin-top:6px">
    <span style="flex:1;height:4px;background:linear-gradient(to left,{lines},transparent)"></span>
@@ -46,7 +50,7 @@ def horizontal(theme, mono=None, bg=None, W=2200, H=760):
     bgcss = f"background:{bg};" if bg else ""
     return f"""<html><head><style>{CSS}</style></head><body style="width:{W}px;height:{H}px;{bgcss}">
 <div style="width:{W}px;height:{H}px;display:flex;align-items:center;justify-content:center;gap:40px;padding:40px">
- <svg viewBox="80 0 900 660" width="830">{m}</svg>
+ <svg viewBox="{VB}" width="900">{m}</svg>
  <div style="display:flex;flex-direction:column;align-items:flex-end">
   <div dir="rtl" style="font-family:Alex;font-weight:900;font-size:190px;line-height:1.2;white-space:nowrap;color:{ink}">شركة <span style="color:{acc}">الزاجل</span></div>
   <div style="display:flex;align-items:center;gap:24px;width:100%">
@@ -60,11 +64,11 @@ def appicon(theme, W=1024):
     m = mark(theme, uid="i"+theme)
     return f"""<html><head><style>{CSS}</style></head><body style="width:{W}px;height:{W}px">
 <div style="width:{W}px;height:{W}px;border-radius:230px;background:{bg};display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2px rgba(0,0,0,.06)">
- <svg viewBox="80 0 900 660" width="860">{m}</svg></div></body></html>"""
+ <svg viewBox="{VB}" width="900">{m}</svg></div></body></html>"""
 
 def symbol(theme, mono=None, W=1200, H=900):
     m = mark(theme, uid="s"+theme+(mono or ""), mono=mono)
-    return f"""<html><body style="margin:0;width:{W}px;height:{H}px;display:flex;align-items:center;justify-content:center"><svg viewBox="80 0 900 660" width="{W-80}">{m}</svg></body></html>"""
+    return f"""<html><body style="margin:0;width:{W}px;height:{H}px;display:flex;align-items:center;justify-content:center"><svg viewBox="{VB}" width="{W-80}">{m}</svg></body></html>"""
 
 jobs = {
  "01-alzajil-full-dark":     (full("dark", bg="#161616"), 1600,1750,False),
