@@ -1,6 +1,6 @@
 import re, os
 from mark import RED, INK
-from mark2 import mark2, VB
+from mark3 import mark2, VB, VB_APP
 import sys
 BIRD=sys.argv[1] if len(sys.argv)>1 else "213628"
 def mark(theme, uid="a", mono=None, knock=None): return mark2(theme, uid=uid, mono=mono, knock=knock, bird=BIRD)
@@ -61,10 +61,14 @@ def horizontal(theme, mono=None, bg=None, W=2200, H=760):
 
 def appicon(theme, W=1024):
     bg = "#FFFFFF" if theme=="light" else "#1B1B1B"
-    m = mark(theme, uid="i"+theme)
+    m = mark2(theme, uid="i"+theme, bird=BIRD, layout="app")
     return f"""<html><head><style>{CSS}</style></head><body style="width:{W}px;height:{W}px">
 <div style="width:{W}px;height:{W}px;border-radius:230px;background:{bg};display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2px rgba(0,0,0,.06)">
- <svg viewBox="{VB}" width="900">{m}</svg></div></body></html>"""
+ <svg viewBox="{VB_APP}" width="900">{m}</svg></div></body></html>"""
+
+def appsymbol(theme, W=1024):
+    m = mark2(theme, uid="as"+theme, bird=BIRD, layout="app")
+    return f"""<html><body style="margin:0;width:{W}px;height:{W}px"><svg viewBox="{VB_APP}" width="{W}" height="{W}">{m}</svg></body></html>"""
 
 def symbol(theme, mono=None, W=1200, H=900):
     m = mark(theme, uid="s"+theme+(mono or ""), mono=mono)
@@ -80,6 +84,7 @@ jobs = {
  "07-alzajil-icon-dark":     (appicon("dark"),1024,1024,True),
  "08-alzajil-symbol-transparent": (symbol("light"),1200,900,True),
  "09-alzajil-mono-black":    (full("light", mono="#111111"),1600,1750,True),
+ "11-alzajil-app-symbol-transparent": (appsymbol("light"),1024,1024,True),
  "10-alzajil-mono-white":    (full("dark", mono="#ffffff", bg="#E54839", knock="#E54839"),1600,1750,False),
 }
 os.makedirs("html",exist_ok=True)
